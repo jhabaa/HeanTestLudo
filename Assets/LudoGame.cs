@@ -50,19 +50,39 @@ public class LudoGame : MonoBehaviour
         }
         DrawCross();
         SortPlayers();
-        //Path(gamelist);
+        Path(gamelist);
     }
 
     private void Path (List<GameObject> path)
     {
         int a = 5, b = 7;
-        for (int i = 0; i <= a; i++)
+        int x = 0 , y;
+
+        switch (x)
         {
-            for(int j = 5; j<= b; j++)
-            {
-                GameObject g = GameObject.Find(i.ToString() + "," + j.ToString() + "#" + string.Empty);
-                newPath.Add(g);
-            }
+            case 0:
+                for (y = 5; y < b + 1; y++)
+                {
+                    GameObject g = GameObject.Find(x.ToString() + "," + y.ToString() + "#" + string.Empty);
+                    newPath.Add(g);
+                }
+                break;
+            default:
+                switch (y)
+                {
+
+                }
+                break;
+
+        }
+            
+       
+
+
+
+        for (int x = 0; x < a+1; x = x +5)
+        {
+            
         }
     }
 
