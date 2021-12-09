@@ -334,11 +334,15 @@ MonoBehaviour:
   tile: {fileID: 5482952790134442736, guid: 8ce6a1f84a746cc449fefec116678f27, type: 3}
   plateau: {fileID: 4483061286889187685}
   pion3D: {fileID: 6737155426133348648, guid: bd44a1b69a23c48dca64aa914f926779, type: 3}
+  test: {fileID: 2100000, guid: 0918a409e64e76246bb0ef0ade635599, type: 2}
   yellowHome: []
   redHome: []
   arena: []
   finishYellow: []
   finishRed: []
+  gamelist: []
+  newPath: []
+  deepness: 2
 --- !u!1 &357491527
 GameObject:
   m_ObjectHideFlags: 0

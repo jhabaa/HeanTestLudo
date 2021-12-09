@@ -12,6 +12,7 @@ public class LudoGame : MonoBehaviour
     public GameObject tile;
     public GameObject plateau;
     public GameObject pion3D;
+    public Material test;
     public List<GameObject> yellowHome, redHome, arena, finishYellow, finishRed, gamelist, newPath;
     private bool jeton = true;
     public int deepness = 2;
@@ -51,38 +52,118 @@ public class LudoGame : MonoBehaviour
         DrawCross();
         SortPlayers();
         Path(gamelist);
+        StartCoroutine(TestPath(newPath));
+    }
+
+    private IEnumerator TestPath(List<GameObject> parth)
+    {
+        foreach(GameObject gameObject in parth)
+        {
+            
+            gameObject.GetComponent<MeshRenderer>().material = test;
+            yield return new WaitForSecondsRealtime(1);
+        }
     }
 
     private void Path (List<GameObject> path)
     {
         int a = 5, b = 7;
-        int x = 0 , y;
-
-        switch (x)
+        
+        for (int x = 0; x < 1; x++)
         {
-            case 0:
-                for (y = 5; y < b + 1; y++)
-                {
-                    GameObject g = GameObject.Find(x.ToString() + "," + y.ToString() + "#" + string.Empty);
-                    newPath.Add(g);
-                }
-                break;
-            default:
-                switch (y)
-                {
-
-                }
-                break;
-
+            for (int y = 5; y <8; y++)
+            {
+                GameObject g = GameObject.Find(x.ToString() + "," + y.ToString() + "#" + string.Empty);
+                newPath.Add(g);
+            }
         }
-            
-       
-
-
-
-        for (int x = 0; x < a+1; x = x +5)
+        for (int y = 7; y < 8; y++)
         {
-            
+            for (int x = 1; x < 6; x++)
+            {
+                GameObject g = GameObject.Find(x.ToString() + "," + y.ToString() + "#" + string.Empty);
+                newPath.Add(g);
+            }
+        }
+        for (int x = 5; x < 6; x++)
+        {
+            for (int y = 8; y < 13; y++)
+            {
+                GameObject g = GameObject.Find(x.ToString() + "," + y.ToString() + "#" + string.Empty);
+                newPath.Add(g);
+            }
+        }
+        for (int y = 12; y < 13; y++)
+        {
+            for (int x = 6; x < 8; x++)
+            {
+                GameObject g = GameObject.Find(x.ToString() + "," + y.ToString() + "#" + string.Empty);
+                newPath.Add(g);
+            }
+        }
+        for (int x = 7; x < 8; x++)
+        {
+            for (int y = 11; y > 6; y--)
+            {
+                GameObject g = GameObject.Find(x.ToString() + "," + y.ToString() + "#" + string.Empty);
+                newPath.Add(g);
+            }
+        }
+        for (int y = 7; y < 8; y++)
+        {
+            for (int x = 8; x < 13; x++)
+            {
+                GameObject g = GameObject.Find(x.ToString() + "," + y.ToString() + "#" + string.Empty);
+                newPath.Add(g);
+            }
+        }
+        for (int x = 12; x < 13; x++)
+        {
+            for (int y = 6; y > 4; y--)
+            {
+                GameObject g = GameObject.Find(x.ToString() + "," + y.ToString() + "#" + string.Empty);
+                newPath.Add(g);
+            }
+        }
+        for (int y = 5; y < 6; y++)
+        {
+            for (int x = 11; x > 6; x--)
+            {
+                GameObject g = GameObject.Find(x.ToString() + "," + y.ToString() + "#" + string.Empty);
+                newPath.Add(g);
+            }
+        }
+        for (int x = 7; x < 8; x++)
+        {
+            for (int y = 4; y >= 0; y--)
+            {
+                GameObject g = GameObject.Find(x.ToString() + "," + y.ToString() + "#" + string.Empty);
+                newPath.Add(g);
+            }
+        }
+        for (int y = 0; y < 1; y++)
+        {
+            for (int x = 6; x > 4; x--)
+            {
+                GameObject g = GameObject.Find(x.ToString() + "," + y.ToString() + "#" + string.Empty);
+                newPath.Add(g);
+            }
+        }
+        for (int x = 5; x < 6; x++)
+        {
+            for (int y = 1; y < 6; y++)
+            {
+                GameObject g = GameObject.Find(x.ToString() + "," + y.ToString() + "#" + string.Empty);
+                newPath.Add(g);
+            }
+        }
+        for (int y = 5; y < 6; y++)
+        {
+            for (int x = 4; x > 0; x--)
+            {
+                GameObject g = GameObject.Find(x.ToString() + "," + y.ToString() + "#" + string.Empty);
+                newPath.Add(g);
+            }
         }
     }
 
@@ -91,6 +172,7 @@ public class LudoGame : MonoBehaviour
         yellowHome = GameObject.FindGameObjectsWithTag("yellow").ToList();
         GameObject yellowStart = GameObject.Find(5 + "," + 1 + "#" + string.Empty);
         yellowStart.tag = "startyellow";
+        gamelist.Add(yellowStart);
     }
 
     public void DrawCross()
@@ -191,6 +273,7 @@ public class LudoGame : MonoBehaviour
             {
                 default:
                    GameObject g = arena.Find(x => x.tag.Contains("yellow"));
+                    g.transform.position = newPath[dice].transform.position;
                     print(g.name);
                     break;
             }

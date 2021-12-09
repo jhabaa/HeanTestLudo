@@ -8,6 +8,10 @@ TagManager:
   - yellow
   - red
   - startyellow
+  - finishYellow
+  - finishRed
+  - startred
+  - white
   layers:
   - Default
   - TransparentFX
