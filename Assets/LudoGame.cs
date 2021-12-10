@@ -255,9 +255,14 @@ public class LudoGame : MonoBehaviour
         print(dice);
         if(yellowHome.Count == 4)
         {
-            if (dice == 6)
+            if (dice == 6 && jeton == true)
             {
-                yellowHome[0].transform.localPosition = GameObject.FindGameObjectWithTag("startyellow").transform.localPosition;
+               // 
+               // print(cost.Length);
+               // print(yellowHome[0].name);
+                //cost[1] = (39).ToString();
+                yellowHome[0].name = yellowHome[0].name +"#"+ 39;
+                yellowHome[0].transform.localPosition = newPath[39].transform.localPosition;
                 arena.Add(yellowHome[0]);
                 yellowHome.RemoveAt(0);
             }
@@ -273,7 +278,9 @@ public class LudoGame : MonoBehaviour
             {
                 default:
                    GameObject g = arena.Find(x => x.tag.Contains("yellow"));
-                    g.transform.position = newPath[dice].transform.position;
+                    String[] cost = g.name.Split('#');
+                    int step = dice + int.Parse(cost[1]);
+                    g.transform.localPosition = newPath[dice+1].transform.localPosition;
                     print(g.name);
                     break;
             }
