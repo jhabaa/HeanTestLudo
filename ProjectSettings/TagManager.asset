@@ -12,6 +12,7 @@ TagManager:
   - finishRed
   - startred
   - white
+  - dice
   layers:
   - Default
   - TransparentFX
