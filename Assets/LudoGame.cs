@@ -16,7 +16,7 @@ public class LudoGame : MonoBehaviour
     public GameObject Dice;
     public Material test;
     public List<GameObject> yellowHome, redHome, arena, finishYellow, finishRed, gamelist, newPath, yellowPath;
-    private bool jeton = true;
+    public bool jeton = true;
     public int deepness = 2;
     private string yellow;
     public static GameObject selectedPlayer;
@@ -42,7 +42,7 @@ public class LudoGame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(diceNumber.ToString());
+        //Debug.Log(diceNumber.ToString());
         
     }
 
@@ -63,6 +63,7 @@ public class LudoGame : MonoBehaviour
         yellowPath = newPath;
         YellowPathMaker(yellowPath);
         StartCoroutine(TestPath(yellowPath));
+        playGame();
     }
 
     private IEnumerator TestPath(List<GameObject> parth)
@@ -190,6 +191,9 @@ public class LudoGame : MonoBehaviour
         GameObject yellowStart = GameObject.Find(5 + "," + 1 + "#" + string.Empty);
         yellowStart.tag = "startyellow";
         gamelist.Add(yellowStart);
+        //For the Red Team
+        redHome = GameObject.FindGameObjectsWithTag("red").ToList();
+
     }
 
     public void DrawCross()
@@ -276,8 +280,8 @@ public class LudoGame : MonoBehaviour
             StartCoroutine(CPUGame());
         }
         else
-            if (jeton == true)
         {
+            print("Au tour du joueur");
             StartCoroutine(PlayerGame());
         }
         /*
@@ -320,6 +324,7 @@ public class LudoGame : MonoBehaviour
     }
     IEnumerator DiceTrick()
     {
+        selectedPlayer = null;
         GameObject newDice = GameObject.Instantiate(Dice);
         newDice.transform.position = new Vector3(plateau.transform.position.x, plateau.transform.position.y+0.2f , plateau.transform.position.z );
         rb = newDice.GetComponent<Rigidbody>();
@@ -333,8 +338,8 @@ public class LudoGame : MonoBehaviour
         transform.rotation = Quaternion.identity;
         rb.AddForce(transform.up * 500);
         rb.AddTorque(dirX, dirY, dirZ);
-        selectedPlayer = null;
-        yield return new WaitForSeconds(5);
+        
+        yield return new WaitForSeconds(2);
     }
 
     IEnumerator PlayerGame()
@@ -395,15 +400,43 @@ public class LudoGame : MonoBehaviour
         print("Fin d'attente");
     }
 
+    IEnumerator JetonSwap()
+    {
+        jeton ^= jeton;
+        yield return jeton;
+    }
+
     IEnumerator CPUGame()
     {
         StartCoroutine(DiceTrick());
         print("Le CPU doit jouer " + diceNumber);
-        if (redHome)
-        yield return null;
-        //Pseudo Code
-       // MiniMax(arena, depth);
+        if (redHome.Count == 5)
+        {
+            if (diceNumber == 6)
+            {
+                print("Un joueur peu être déplacé pour l'arène");
+                jeton = true;
+                
+            }
+            else
+                print("No Move possible");
+                jeton = true;
 
+        }
+        else
+            if(diceNumber == 6 && arena.Contains(GameObject.FindGameObjectWithTag("red")))
+        {
+            print("Nous pouvons soir faire sortir un joueur, soit avancer un pion de l'arène");
+        }
+        else
+            if(diceNumber != 6 && arena.Contains(GameObject.FindGameObjectWithTag("red")))
+        {
+            print("Nous pouvons juste déplacer un pion de l'arène");
+        }
+
+        //Pseudo Code
+        // MiniMax(arena, depth);
+        yield return new WaitForSeconds(2); 
     }
 
     private int HeuristicValueOfNode()

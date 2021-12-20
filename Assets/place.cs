@@ -18,6 +18,6 @@ public class place : MonoBehaviour
     }
     private void OnMouseOver()
     {
-        print("Clic");
+       // print("Clic");
     }
 }
