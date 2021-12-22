@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 //using Random = System.Random;
@@ -24,10 +25,12 @@ public class LudoGame : MonoBehaviour
     public static Vector3 diceVelocity;
     public static int diceNumber;
     public int dice;
+    public GameObject textScreen;
+    private TextMeshProUGUI screenText;
     // Start is called before the first frame update
     void Start()
     {
-        
+       screenText = textScreen.GetComponent<TextMeshProUGUI>();
     }
 
     private void DrawTable(int x, int y)
@@ -45,9 +48,17 @@ public class LudoGame : MonoBehaviour
         //Debug.Log(diceNumber.ToString());
         
     }
+    IEnumerator ShowText(String textToShow)
+    {
+        screenText.SetText(textToShow);
+        yield return new WaitForSeconds(5);
+        screenText.SetText("");
+       
+    }
 
     public void StartGame()
     {
+        StartCoroutine(ShowText("Hello World"));
         Debug.Log("Game started");
         for (int x = 0; x < 13; x++)
         {
@@ -276,12 +287,12 @@ public class LudoGame : MonoBehaviour
     {
         if (jeton == false)
         {
-            print("Au tour de l'ordinateur");
+            StartCoroutine(ShowText("Au tour de l'ordinateur"));
             StartCoroutine(CPUGame());
         }
         else
         {
-            print("Au tour du joueur");
+            StartCoroutine(ShowText("Au tour du joueur"));
             StartCoroutine(PlayerGame());
         }
         /*
@@ -347,10 +358,10 @@ public class LudoGame : MonoBehaviour
         StartCoroutine(DiceTrick());
 
         //Check dice value
-        print("Play for " + diceNumber);
+       // print("Play for " + diceNumber);
         //dice = diceNumber;
         //Select a player
-        print("Select a player");
+        StartCoroutine(ShowText("Select a player"));
         yield return StartCoroutine(WaitForPlayerSelection());
         Debug.Log("Ok. You selected a Player : " + selectedPlayer.name);
         Destroy(GameObject.FindGameObjectWithTag("dice"));
@@ -371,8 +382,8 @@ public class LudoGame : MonoBehaviour
             }
             if(diceNumber != 6)
             {
-                print("Il faut jouer :" + diceNumber);
-                print("Impossible de Déplacer le joueur. Il faut un 6. Tu as un : " + diceNumber);
+                //print("Il faut jouer :" + diceNumber);
+                StartCoroutine(ShowText(diceNumber + "Pas de deplacement possible"));
                 jeton ^= jeton;
                 playGame();
             }
@@ -382,7 +393,7 @@ public class LudoGame : MonoBehaviour
         {
             string[] split1 = selectedPlayer.name.Split('#');
             int posInPath = int.Parse(split1[1]) + diceNumber;
-            print("Deplacement de : " + diceNumber);
+            StartCoroutine(ShowText("Deplacement de : " + diceNumber));
             Vector3 newPos = new Vector3(yellowPath[posInPath].transform.position.x, yellowPath[posInPath].transform.position.y+0.028f, yellowPath[posInPath].transform.position.z);
             selectedPlayer.transform.position = newPos;
             selectedPlayer.name = split1[0].ToString() + "#" + posInPath.ToString();
@@ -436,7 +447,8 @@ public class LudoGame : MonoBehaviour
 
         //Pseudo Code
         // MiniMax(arena, depth);
-        yield return new WaitForSeconds(2); 
+        yield return new WaitForSeconds(3);
+        Destroy(GameObject.FindGameObjectWithTag("dice"));
     }
 
     private int HeuristicValueOfNode()
