@@ -4,15 +4,16 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - plateau
   - yellow
   - red
-  - startyellow
+  - plateau
+  - dice
   - finishYellow
   - finishRed
-  - startred
+  - startyellow
   - white
-  - dice
+  - yellowCheck
+  - redCheck
   layers:
   - Default
   - TransparentFX
@@ -45,7 +46,7 @@ TagManager:
   - 
   - 
   - 
-  - Spatial Awareness
+  - 
   m_SortingLayers:
   - name: Default
     uniqueID: 0
