@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,25 +29,15 @@ public class LudoGame : MonoBehaviour
     public GameObject textScreen;
     private TextMeshProUGUI screenText;
     private String[] minimaxi;
-<<<<<<< HEAD
     public List<GameObject> feuillesEnArene;
     public AudioSource audioData;
-=======
-    private List<GameObject>[,,] node;
-    private TreeView treeView1;
-    private LinkedList<List<GameObject>> root;
->>>>>>> parent of 88a96db (Arbre crée)
 
     // Start is called before the first frame update
     void Start()
     {
-<<<<<<< HEAD
         screenText = textScreen.GetComponent<TextMeshProUGUI>();
         audioData = GetComponent<AudioSource>();
         audioData.Play(0);
-=======
-       screenText = textScreen.GetComponent<TextMeshProUGUI>();
->>>>>>> parent of 88a96db (Arbre crée)
     }
 
     private void DrawTable(int x, int y)
@@ -92,7 +83,6 @@ public class LudoGame : MonoBehaviour
         SortPlayers();
         Path(gamelist);
         diceNumber = 6;
-<<<<<<< HEAD
         yellowPath =new List<GameObject>(newPath);
         redPath = new List<GameObject>(newPath);
         YellowPathMaker(yellowPath);
@@ -101,14 +91,6 @@ public class LudoGame : MonoBehaviour
         // playGame();
 
 
-=======
-        yellowPath = newPath;
-        redPath = newPath;
-        YellowPathMaker(yellowPath);
-        RedPathMaker(redPath);
-        StartCoroutine(TestPath(redPath));
-        playGame();
->>>>>>> parent of 88a96db (Arbre crée)
     }
 
     private IEnumerator TestPath(List<GameObject> parth)
@@ -438,7 +420,6 @@ public class LudoGame : MonoBehaviour
             }
             selectedPlayer = null;   
         }else
-<<<<<<< HEAD
         {
             if (arena.Contains(selectedPlayer))
             {
@@ -452,18 +433,6 @@ public class LudoGame : MonoBehaviour
                 jeton ^= jeton;
                 playGame();
             }
-=======
-        if (arena.Contains(selectedPlayer))
-        {
-            string[] split1 = selectedPlayer.name.Split('#');
-            int posInPath = int.Parse(split1[1]) + diceNumber;
-            StartCoroutine(ShowText("Deplacement de : " + diceNumber));
-            Vector3 newPos = new Vector3(yellowPath[posInPath].transform.position.x, yellowPath[posInPath].transform.position.y+0.028f, yellowPath[posInPath].transform.position.z);
-            selectedPlayer.transform.position = newPos;
-            selectedPlayer.name = split1[0].ToString() + "#" + posInPath.ToString();
-            jeton ^= jeton;
-            playGame();
->>>>>>> parent of 88a96db (Arbre crée)
         }
         
     }
@@ -606,7 +575,6 @@ public class LudoGame : MonoBehaviour
     private void LaunchMinMax(List<GameObject> gameObjects, int depth, Boolean isMax, int diceValue)
     {
         print("Start Min MAx");
-<<<<<<< HEAD
         //List<GameObject> fakeArena = gameObjects;
         //Creation du Root
         if(diceValue == 6)
@@ -784,56 +752,10 @@ public class LudoGame : MonoBehaviour
         //Pour la valeur Max, nous devons prendre les feuilles de chaque branche du root, et ajouter la valeur du dé aux pion rouges.
 
         foreach(Feuille feuille1 in root.branche)
-=======
-        List<GameObject> fakeArena = gameObjects;
-        //Creation d'un arbre qui prend les différents états de l'arène
-        LinkedList<List<GameObject>> linkedList = new LinkedList<List<GameObject>>();
-            //Commençons par remplir l'arbre, avec les différentes positions possible du tableau sur une profondeur depth
-        //Le lance mon dé à MAX. J'ai 2 possibiltés. Soit 6, soit différent de 6. 
-        //Si j'ai 6, je peux sortir un pion, ou avancer de 6 chacun des pions sur le plateau.
-        if (redHome.Count != 5 && redHome.Count !=0)
-        {
-            print("Home Ok");
-            if(diceValue == 6)
-            {
-                print("Dice = " + diceValue);
-                // sortir un pion parmi ceux de la maison
-                GameObject fakeObject = redHome[0];
-                fakeArena.Add(fakeObject);
-                //redPath.Insert(0, fakeObject);
-                //Ajouter un élément à la liste liée
-                root = new LinkedList<List<GameObject>>();
-                //Add Child
-                root.AddFirst(fakeArena);
-
-                print(root);
-
-
-                // lancer Min surt l'état du plateau
-               // MinAlgorithm(fakeArena, isMax, linkedList);
-            }else
-                {
-                print("Dice = " + diceValue);
-                // sortir un pion parmi ceux de la maison
-                GameObject fakeObject = redHome[0];
-                fakeArena.Add(fakeObject);
-                //redPath.Insert(0, fakeObject);
-                //Ajouter un élément à la liste liée
-                root = new LinkedList<List<GameObject>>();
-                //Add Child
-                root.AddFirst(fakeArena);
-
-                print(root);
-                //Lancer Min sur l'état du plateau
-            }
-        }
-        else if (redHome.Count == 5)
->>>>>>> parent of 88a96db (Arbre crée)
         {
             print("Pions dans Home :" + redHome.Count);
-            if(diceValue == 6)
+            for(int i = 0; i <7;i++)
             {
-<<<<<<< HEAD
                 //Pour ne pas modifier l'état général, on crée une nouvelle liste
                 List<GameObject> temp = new List<GameObject>();
                 foreach (GameObject pion in state)
@@ -882,160 +804,4 @@ public class LudoGame : MonoBehaviour
         
     }
 
-=======
-                //Pas le choix, on sort un pion
-                Vector3 positionToMove = new Vector3(redPath[0].transform.position.x, redPath[0].transform.position.y + 0.028f, redPath[0].transform.position.z);
-                redHome[0].transform.position = Vector3.MoveTowards(redHome[0].transform.position, positionToMove, 200 * Time.deltaTime);
-                string[] split = redHome[0].name.Split('#');
-                redHome[0].name = split[0].ToString() + "#" + 0.ToString();
-                arena.Add(redHome[0]);
-                //redHome.Remove(redHome[0]);
-
-            }
-            else
-            {
-                //passer son tour
-                print("Passer son tour");
-                //lancer ke Min sur le plateau actuel
-            }
-             
-        }
-    }
-
-    private void MinAlgorithm(List<GameObject> fakeArena, bool isMax)
-    {
-        //Pour chaque valeur de Max dans le noeud, je crée des anfants MIN qui représentent les possibilités du jeu
-        for (int diceValue =0; diceValue <7; diceValue++)
-        {
-
-        }
-    }
-
-    /*
-     * This is the minimax function. It considers all the possible ways the game can go ans returns the value of the board
-     */
-    private int MiniMax(List<GameObject> gameObjects, int depth, Boolean isMax, int diceValue)
-    {
-        int score = evaluate(gameObjects);
-        //if Maximizer has won the game, return his evaluate score
-        if (score == 10)
-            return score;
-
-        //if Minimizer has won the game, return his evaluate score
-        if (score == -10)
-            return score;
-
-        //if there are no more moves and no winners
-        if (isMovesLeft(gameObjects) == false)
-            return score;
-
-        //If this maximizer's move
-        if (isMax)
-        {
-            int best = -1000;
-
-            if(diceValue != 6)
-            {
-                foreach(GameObject gameObject in arena)
-                {
-                    if (gameObject.tag == "red")
-                    {
-                        //Arene Fictive
-                        List<GameObject> fakeArena = arena;
-                        //On sauvegarde la position actuelle du pion, pour l'y remettre après avoir tester les possibilités
-                        GameObject fakeObject = gameObject;
-                        int originalIndex = arena.IndexOf(gameObject);
-                        string[] split = fakeObject.name.Split('#');
-                        int newCounter = int.Parse(split[1]) + diceValue;
-                        //Vérifier l'état de la tuile destination
-                            //Si la tuile contient un pion jaune
-                        if (redPath[newCounter].tag == "yellowCheck")
-                        {
-                            //Attribuer un score elevé
-                            score = 100;
-                            // Sinon, si la tuile est vide, le score est moindre, mais on peut y placer le joueur
-                        }else
-                            if (redPath[newCounter].tag == "white")
-                        {
-                            score = 10;
-                        }
-
-                        //Bouger le fake game object, puis vérifier la case sur laquelle on attérit. Si elle a un tag "white" alors elle est vide, si le tag est "red" elle contient un pion rouge, sinon un pion jaune
-                        fakeObject.transform.position = new Vector3(redPath[0 + int.Parse(split[1])].transform.position.x, redPath[0 + int.Parse(split[1])].transform.position.y + 0.028f, redPath[0 + int.Parse(split[1])].transform.position.z);
-                        
-                        selectedPlayer.name = split[0].ToString() + "#" + 0.ToString();
-                    }
-                }
-            }
-            else
-            if(diceValue == 6)
-            {
-                if(redHome.Count != 0)
-                {
-                    Vector3 positionToMove = new Vector3(yellowPath[0].transform.position.x, yellowPath[0].transform.position.y + 0.028f, yellowPath[0].transform.position.z);
-                    selectedPlayer.transform.position = Vector3.MoveTowards(selectedPlayer.transform.position, positionToMove, 200 * Time.deltaTime);
-                    string[] split = selectedPlayer.name.Split('#');
-                    selectedPlayer.name = split[0].ToString() + "#" + 0.ToString();
-                }
-            }
-
-            // Traverse all game
-            if(diceValue == 6)
-            {
-                //On a deux possibilités, soit on sort un joueur soit on bouge un joueur existant
-                //Code pour sortir
-                if(redHome.Count != 0)
-                {
-                    minimaxi.Append("S");
-                }
-            }
-                // On ne peut qu'avancer un pion. Il s'agit de trouver lequel
-
-        //On va ensuite sur le min
-        }else
-            if(!isMax)
-        {
-            print("start min");
-            //On estime les valueurs possible du lancé du playeur, et pour chaque valeur, on évalue le coût en fonction des mouvements possibles 
-            for (int diceMin = 1; diceMin<7; diceMin++)
-            {
-                //Si le playeur joue un chiffre différent de 6, il ne peut que déplacer un pion sur le plateau ou passer son tour
-                if(diceMin != 6)
-                {
-                    foreach(GameObject gameObject in arena)
-                    {
-                        if(gameObject.tag == "yellow")
-                        {
-                            //Arene Fictive
-                            List<GameObject> fakeArena = arena;
-                            //On sauvegarde la position actuelle du pion, pour l'y remettre après avoir tester les possibilités
-                            GameObject fakeObject = gameObject;
-                            int originalIndex = arena.IndexOf(gameObject);
-                            string[] split = fakeObject.name.Split('#');
-                            int newCounter = int.Parse(split[1]) + diceMin;
-                            //Vérifier l'état de la tuile destination
-                            //Si la tuile contient un pion jaune
-                            if (redPath[newCounter].tag == "redCheck")
-                            {
-                                //Attribuer un score elevé
-                                score = 100;
-                                // Sinon, si la tuile est vide, le score est moindre, mais on peut y placer le joueur
-                            }
-                            else
-                                if (redPath[newCounter].tag == "white")
-                            {
-                                score = 10;
-                            }
-                        }
-                    }
-                }
-                else
-                {
-
-                }
-            }
-        }
-        return score;
-    }
->>>>>>> parent of 88a96db (Arbre crée)
 }
